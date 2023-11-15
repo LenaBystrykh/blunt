@@ -86,7 +86,7 @@ function changeSlide() {
   }
 
   &__content {
-    z-index: 2;
+    z-index: 11;
     display: flex;
     flex-direction: column;
     padding: 80px 70px 80px 90px;
@@ -99,7 +99,7 @@ function changeSlide() {
     object-fit: cover;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 10;
     border-radius: 20px 20px 0 0;
     opacity: 0;
     transition: 0.5s;

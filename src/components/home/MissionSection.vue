@@ -18,11 +18,13 @@
 
 <style lang="scss">
 .mission-section {
+  position: relative;
   display: flex;
   background-color: #f1f1f1;
   width: 100%;
   height: 100vh;
   padding: 93px 20px 20px 50px;
+  z-index: 10;
 
   &__content {
     flex: 1;

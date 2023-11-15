@@ -52,10 +52,11 @@
   position: relative;
 
   video {
+    position: relative;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: 1;
+    z-index: 10;
   }
 
   &__content {
@@ -67,7 +68,7 @@
     display: grid;
     grid-template-columns: 70% 30%;
     grid-template-rows: 50% 50%;
-    z-index: 2;
+    z-index: 11;
   }
 
   &__title {

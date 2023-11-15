@@ -44,8 +44,10 @@ import SustainableIcon from "../svg/SustainableIcon.vue";
 
 <style lang="scss">
 .about-section {
+  position: relative;
   padding: 100px 50px;
   background-color: #f6f6f6;
+  z-index: 10;
 
   &__header {
     margin-bottom: 100px;
