@@ -24,6 +24,91 @@
           <div class="umbrella__filling-image">
             <img :src="url" />
           </div>
+          <div class="umbrella__info">
+            <div class="umbrella__option">
+              <div class="umbrella__option-area"></div>
+              <div class="umbrella__option-button" @click="toggleButton(1)">
+                <div
+                  class="umbrella__option-plus-v"
+                  :class="{ selected: buttonNum === 1 }"
+                ></div>
+                <div class="umbrella__option-plus-h"></div>
+              </div>
+            </div>
+            <div class="umbrella__option">
+              <div class="umbrella__option-area"></div>
+              <div class="umbrella__option-button" @click="toggleButton(2)">
+                <div
+                  class="umbrella__option-plus-v"
+                  :class="{ selected: buttonNum === 2 }"
+                ></div>
+                <div class="umbrella__option-plus-h"></div>
+              </div>
+            </div>
+            <div class="umbrella__option">
+              <div class="umbrella__option-area"></div>
+              <div class="umbrella__option-button" @click="toggleButton(3)">
+                <div
+                  class="umbrella__option-plus-v"
+                  :class="{ selected: buttonNum === 3 }"
+                ></div>
+                <div class="umbrella__option-plus-h"></div>
+              </div>
+            </div>
+            <div class="umbrella__description">
+              <h2>The BLUNT difference</h2>
+              <p>
+                We believe there’s strength in simplicity – using materials
+                smarter and making components work harder means your BLUNT is
+                meticulously designed and refined to withstand whatever life
+                throws at you.
+              </p>
+            </div>
+            <div class="umbrella__popups">
+              <div
+                class="umbrella__popup"
+                :class="{ selected: buttonNum === 1 }"
+              >
+                <div class="umbrella__popup-image">
+                  <img src="@/assets/images/popup-tip.webp" />
+                </div>
+                <h3>BLUNT Tip</h3>
+                <p>
+                  Each patented BLUNT tip acts like a mini umbrella, opening
+                  under full force to evenly distribute tension from the frame
+                  to the canopy edge.
+                </p>
+              </div>
+              <div
+                class="umbrella__popup"
+                :class="{ selected: buttonNum === 2 }"
+              >
+                <div class="umbrella__popup-image">
+                  <img src="@/assets/images/popup-frame.webp" />
+                </div>
+                <h3>Frame</h3>
+                <p>
+                  The BLUNT umbrella frame exhibits a unique strut mechanism,
+                  pushing maximum radial force out towards the ribs resulting in
+                  our highly tensioned canopy.
+                </p>
+              </div>
+              <div
+                class="umbrella__popup"
+                :class="{ selected: buttonNum === 3 }"
+              >
+                <div class="umbrella__popup-image">
+                  <img src="@/assets/images/popup-canopy.webp" />
+                </div>
+                <h3>Canopy</h3>
+                <p>
+                  Our iconic canopy shape is the result of our patented BLUNT
+                  tips providing a taut contour for ultimate performance and our
+                  distinctive and iconic shape.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -41,10 +126,11 @@ let imgNumber = 10;
 let prevProgress = 0;
 const umbrellasvg = ref();
 const url = ref("/3dmotion/Blunt_HPFinal0010_0010.jpg");
+const buttonNum = ref(0);
 
 function changeUmbrellaImage(value) {
-  // 0.57 because durations summ = 23, umbrella movement takes 10/23, 13/23 = 0.57, after that movement begins
-  if (Math.abs(value) > 0.57) {
+  // 0.53 because durations summ = 26, before umbrella 13/26 = 0.5, slightly after that movement begins
+  if (Math.abs(value) > 0.53) {
     if (value === 1) {
       url.value = "/3dmotion/Blunt_HPFinal0152_0152.jpg";
     }
@@ -64,6 +150,14 @@ function changeUmbrellaImage(value) {
     }
   } else {
     url.value = "/3dmotion/Blunt_HPFinal0010_0010.jpg";
+  }
+}
+
+function toggleButton(num) {
+  if (buttonNum.value === num) {
+    buttonNum.value = 0;
+  } else {
+    buttonNum.value = num;
   }
 }
 
@@ -96,6 +190,11 @@ onMounted(() => {
     .to(".umbrella__filling-image", {
       ease: "none",
       duration: 10,
+    })
+    .to(".umbrella__info", {
+      opacity: 1,
+      ease: "none",
+      duration: 3,
     });
 });
 </script>
@@ -103,11 +202,11 @@ onMounted(() => {
 <style lang="scss">
 .umbrella {
   width: 100%;
-  height: 400vh;
+  height: 300vh;
   background-color: #efefef;
   position: relative;
   overflow: visible;
-  padding: 0 0 250vh 0;
+  padding: 0 0 200vh 0;
   margin: 0;
   display: block;
 
@@ -230,6 +329,170 @@ onMounted(() => {
         width: 100%;
       }
     }
+  }
+
+  &__info {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    opacity: 0;
+  }
+
+  &__description {
+    max-width: 350px;
+    padding-left: 40px;
+    padding-top: 70px;
+    text-align: left;
+
+    h2 {
+      font-size: 54px;
+      line-height: 58px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+  }
+
+  &__option {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 68px;
+    height: 68px;
+
+    &:nth-of-type(1) {
+      top: 5%;
+      left: 70%;
+    }
+
+    &:nth-of-type(2) {
+      top: 26%;
+      left: 45%;
+    }
+
+    &:nth-of-type(3) {
+      top: 66%;
+      left: 34%;
+    }
+  }
+
+  &__option-button {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 50%;
+    background-color: #484646;
+    cursor: pointer;
+  }
+
+  &__option-plus-v {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 32px;
+    background-color: white;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    transition: 0.3s;
+
+    &.selected {
+      opacity: 0;
+    }
+  }
+
+  &__option-plus-h {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 32px;
+    height: 2px;
+    background-color: white;
+    transform: translate(-50%, -50%);
+  }
+
+  &__option-area {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(163, 163, 163, 0.15);
+    border-radius: 50%;
+    animation: sparkle 1.5s linear infinite;
+    -webkit-animation: sparkle 1.5s linear infinite;
+  }
+
+  &__popup {
+    max-width: 176px;
+    z-index: 19;
+    text-align: left;
+    position: absolute;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: 0.5s;
+
+    &.selected {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    &:nth-of-type(1) {
+      top: 4%;
+      left: 78%;
+    }
+
+    &:nth-of-type(2) {
+      top: 35%;
+      left: 70%;
+    }
+
+    &:nth-of-type(3) {
+      top: 50%;
+      left: 9%;
+    }
+
+    &-image {
+      border-radius: 8px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    h3 {
+      font-size: 22px;
+      line-height: 28px;
+      font-weight: 600;
+      margin: 35px 0 15px 0;
+    }
+
+    p {
+      font-size: 13px;
+      line-height: 17px;
+      letter-spacing: 0;
+      font-weight: 500;
+    }
+  }
+}
+
+@keyframes sparkle {
+  0% {
+    scale: 1;
+    opacity: 1;
+  }
+  80% {
+    scale: 1.8;
+    opacity: 1;
+  }
+  100% {
+    scale: 1.8;
+    opacity: 0;
   }
 }
 </style>
