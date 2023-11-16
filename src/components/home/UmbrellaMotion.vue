@@ -22,7 +22,7 @@
       <div class="umbrella__filling">
         <div class="umbrella__filling-content">
           <div class="umbrella__filling-image">
-            <img src="@/assets/images/3dmotion/Blunt_HPFinal0010_0010.jpg" />
+            <img :src="url" />
           </div>
         </div>
       </div>
@@ -31,20 +31,51 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+let imgNumber = 10;
+let prevProgress = 0;
+const umbrellasvg = ref();
+const url = ref("/3dmotion/Blunt_HPFinal0010_0010.jpg");
+
+function changeUmbrellaImage(value) {
+  // 0.57 because durations summ = 23, umbrella movement takes 10/23, 13/23 = 0.57, after that movement begins
+  if (Math.abs(value) > 0.57) {
+    if (value === 1) {
+      url.value = "/3dmotion/Blunt_HPFinal0152_0152.jpg";
+    }
+    if (prevProgress < value && imgNumber < 152) {
+      // scroll down
+      imgNumber++;
+      prevProgress = value;
+    } else if (prevProgress > value && imgNumber > 10) {
+      // scroll up
+      imgNumber--;
+      prevProgress = value;
+    }
+    if (imgNumber < 100) {
+      url.value = `/3dmotion/Blunt_HPFinal00${imgNumber}_00${imgNumber}.jpg`;
+    } else {
+      url.value = `/3dmotion/Blunt_HPFinal0${imgNumber}_0${imgNumber}.jpg`;
+    }
+  } else {
+    url.value = "/3dmotion/Blunt_HPFinal0010_0010.jpg";
+  }
+}
+
 onMounted(() => {
   let tl = gsap.timeline({
     scrollTrigger: {
-      trigger: ".umbrella__animation",
-      start: "40% center",
-      end: "bottom 20%",
+      trigger: ".umbrella",
+      start: "100px 100px",
+      end: "bottom top",
       scrub: 2,
       pin: true,
+      onUpdate: (self) => changeUmbrellaImage(self.progress),
     },
   });
   tl.to(".umbrella__text", {
@@ -61,6 +92,10 @@ onMounted(() => {
       clipPath: "inset(0% 0% 0%)",
       ease: "none",
       duration: 5,
+    })
+    .to(".umbrella__filling-image", {
+      ease: "none",
+      duration: 10,
     });
 });
 </script>
@@ -68,11 +103,11 @@ onMounted(() => {
 <style lang="scss">
 .umbrella {
   width: 100%;
-  height: 300vh;
+  height: 400vh;
   background-color: #efefef;
   position: relative;
   overflow: visible;
-  padding: 0 0 180vh 0;
+  padding: 0 0 250vh 0;
   margin: 0;
   display: block;
 
@@ -117,6 +152,17 @@ onMounted(() => {
     transform: translate3d(-50%, -50%, 0);
   }
 
+  &__outline {
+    transform: scale(1.3, 1.3);
+    transform-origin: 50% 0%;
+
+    img {
+      max-width: none;
+      width: 100%;
+      display: block;
+    }
+  }
+
   &__animation-text {
     position: absolute;
     top: 0;
@@ -138,18 +184,6 @@ onMounted(() => {
       black 80%,
       transparent 100%
     );
-  }
-
-  &__outline {
-    transition: 1.5s;
-    transform: scale(1.3, 1.3);
-    transform-origin: 50% 0%;
-
-    img {
-      max-width: none;
-      width: 100%;
-      display: block;
-    }
   }
 
   &__text {
