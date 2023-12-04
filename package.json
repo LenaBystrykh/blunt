@@ -11,7 +11,9 @@
     "core-js": "^3.8.3",
     "gsap": "^3.12.2",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.3"
+    "vue-carousel": "^0.18.0",
+    "vue-router": "^4.0.3",
+    "vue3-carousel": "^0.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -31,7 +33,8 @@
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "vue/setup-compiler-macros": true
     },
     "extends": [
       "plugin:vue/vue3-essential",
