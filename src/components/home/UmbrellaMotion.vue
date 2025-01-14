@@ -125,31 +125,34 @@ gsap.registerPlugin(ScrollTrigger);
 let imgNumber = 10;
 let prevProgress = 0;
 const umbrellasvg = ref();
-const url = ref("/3dmotion/Blunt_HPFinal0010_0010.jpg");
+const url = ref("/blunt/3dmotion/Blunt_HPFinal0010_0010.jpg");
 const buttonNum = ref(0);
 
 function changeUmbrellaImage(value) {
   // 0.53 because durations summ = 26, before umbrella 13/26 = 0.5, slightly after that movement begins
-  if (Math.abs(value) > 0.53) {
+  if (Math.abs(value) > 0.52) {
     if (value === 1) {
-      url.value = "/3dmotion/Blunt_HPFinal0152_0152.jpg";
+      url.value = "/blunt/3dmotion/Blunt_HPFinal0152_0152.jpg";
     }
+    // 143 images in total => 0.00335664 of value on each photo
     if (prevProgress < value && imgNumber < 152) {
       // scroll down
-      imgNumber++;
+      imgNumber = Math.round((value - 0.52) / 0.00335664) + 10;
       prevProgress = value;
     } else if (prevProgress > value && imgNumber > 10) {
       // scroll up
-      imgNumber--;
+      imgNumber = Math.round((value - 0.52) / 0.00335664) + 10;
       prevProgress = value;
     }
-    if (imgNumber < 100) {
-      url.value = `/3dmotion/Blunt_HPFinal00${imgNumber}_00${imgNumber}.jpg`;
+    if (imgNumber >= 10 && imgNumber < 100) {
+      url.value = `/blunt/3dmotion/Blunt_HPFinal00${imgNumber}_00${imgNumber}.jpg`;
+    } else if (imgNumber < 152) {
+      url.value = `/blunt/3dmotion/Blunt_HPFinal0${imgNumber}_0${imgNumber}.jpg`;
     } else {
-      url.value = `/3dmotion/Blunt_HPFinal0${imgNumber}_0${imgNumber}.jpg`;
+      url.value = "/blunt/3dmotion/Blunt_HPFinal0152_0152.jpg";
     }
   } else {
-    url.value = "/3dmotion/Blunt_HPFinal0010_0010.jpg";
+    url.value = "/blunt/3dmotion/Blunt_HPFinal0010_0010.jpg";
   }
 }
 
@@ -202,11 +205,11 @@ onMounted(() => {
 <style lang="scss">
 .umbrella {
   width: 100%;
-  height: 300vh;
+  height: 100vh;
   background-color: #efefef;
   position: relative;
   overflow: visible;
-  padding: 0 0 200vh 0;
+  padding: 0;
   margin: 0;
   display: block;
 

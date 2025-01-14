@@ -36,7 +36,7 @@ function toPage() {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .card {
   background: #f5f5f5;
   overflow: hidden;

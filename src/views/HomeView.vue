@@ -5,6 +5,7 @@
   <AboutSection />
   <SlidesSection />
   <UmbrellaMotion />
+  <ProductCardsCarouselSection />
   <CarouselSection />
 </template>
 
@@ -15,5 +16,6 @@ import MissionSection from "@/components/home/MissionSection.vue";
 import AboutSection from "@/components/home/AboutSection.vue";
 import SlidesSection from "@/components/home/SlidesSection.vue";
 import UmbrellaMotion from "@/components/home/UmbrellaMotion.vue";
+import ProductCardsCarouselSection from "@/components/home/ProductCardsCarouselSection.vue";
 import CarouselSection from "@/components/home/CarouselSection.vue";
 </script>
